@@ -9,6 +9,7 @@ import openpyxl
 
 '''1. 도서목록 데이터가 저장된 엑셀파일을 불러온다'''
 book_excel_file = openpyxl.load_workbook('book_list.xlsx')
+file_name = 'book_list.xlsx'
 list_sheet = book_excel_file.worksheets[0]
 
 '''2. row, column으로 구분하여 도서 목록을 리스트에 저장한다.'''
@@ -70,9 +71,11 @@ def search():
 def book_loan_engine(book_name):
     for data in book_list:
         if book_name in data['name']:
-            if data['loan'] == 'TRUE':
+            if data['loan'] == 1:
                 print('대출완료')
-                list_sheet[C10] = 'False'
+                row_number = book_list.index(data) + 1
+                list_sheet[f'C{row_number}'] = 0
+                book_excel_file.save(filename = file_name)
                 return
             else:
                 print('이미 대출되어있는 도서입니다.')
@@ -82,9 +85,9 @@ def book_loan_engine(book_name):
 def book_loan_engine_number(number):
     for data in book_list:
         if number == data['number']:
-            if data['loan'] == 'TRUE'
+            if data['loan'] == 1:
                 print('대출완료')
-                list_sheet[C10] = 'False'
+                list_sheet[C10] = 0
                 return
             else:
                 print('이미 대출되어있는 도서입니다.')
@@ -103,4 +106,4 @@ def loan():
 
 
 
-search()
+loan()
