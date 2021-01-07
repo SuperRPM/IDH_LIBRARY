@@ -80,12 +80,25 @@ def book_loan_engine(book_name):
     print('대출하려는 책이 없습니다. 제목을 확인해주세요')
 
 def book_loan_engine_number(number):
+    for data in book_list:
+        if number == data['number']:
+            if data['loan'] == 'TRUE'
+                print('대출완료')
+                list_sheet[C10] = 'False'
+                return
+            else:
+                print('이미 대출되어있는 도서입니다.')
+                return
+    print('대출하려는 책이 없습니다. 제목을 확인해주세요')
 
 
 #실제 대출 구현
 def loan():
     user_type = input('책 제목을 입력하세요 :')
-    book_loan_engine(user_type)
+    if user_type[0] == 2:
+        book_loan_engine_number(user_type)
+    else:
+        book_loan_engine(user_type)
 
 
 
