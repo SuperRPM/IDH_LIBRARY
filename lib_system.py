@@ -13,7 +13,6 @@ file_name = 'book_list.xlsx'
 list_sheet = book_excel_file.worksheets[0]
 
 '''2. row, column으로 구분하여 도서 목록을 리스트에 저장한다.'''
-
 book_list = []
 #분류번호, 제목, 대출가능 순으로 dict type으로 생성후 list에 저장
 for row in list_sheet.rows:
@@ -72,9 +71,11 @@ def book_loan_engine(book_name):
     for data in book_list:
         if book_name in data['name']:
             if data['loan'] == 1:
-                print('대출완료')
+                print(f"{data['name']} 대출 완료")
+                #print('대출완료')
                 row_number = book_list.index(data) + 1
-                list_sheet[f'C{row_number}'] = 0
+                #list_sheet[f'C{row_number}'] = 0
+                data['loan'] = 0
                 book_excel_file.save(filename = file_name)
                 return
             else:
