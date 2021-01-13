@@ -66,17 +66,19 @@ def search():
     else:
         search_engine(user_type)
 
-'''대출, 반납 엔진'''
+'''도서 대출 엔진'''
 def book_loan_engine(book_name):
     for data in book_list:
         if book_name in data['name']:
             if data['loan'] == 1:
-                print(f"{data['name']} 대출 완료")
-                #print('대출완료')
-                row_number = book_list.index(data) + 1
-                #list_sheet[f'C{row_number}'] = 0
-                data['loan'] = 0
-                book_excel_file.save(filename = file_name)
+#                print(f"{data['name']} 대출 완료")
+                print(data['number'])
+                print(data['name'])
+                print('대출 완료')
+                row_number = book_list.index(data)
+                input_cell = row_number + 2
+                list_sheet[f'C{input_cell}'] = 0
+                book_excel_file.save(filename = file_name) #변경된 데이터 엑셀에 다시 저장! 중요!!
                 return
             else:
                 print('이미 대출되어있는 도서입니다.')
@@ -87,8 +89,13 @@ def book_loan_engine_number(number):
     for data in book_list:
         if number == data['number']:
             if data['loan'] == 1:
-                print('대출완료')
-                list_sheet[C10] = 0
+                print(data['number'])
+                print(data['name'])
+                print('대출 완료')
+                row_number = book_list.index(data)
+                input_cell = row_number + 2
+                list_sheet[f'C{input_cell}'] = 0
+                book_excel_file.save(filename = file_name)
                 return
             else:
                 print('이미 대출되어있는 도서입니다.')
@@ -104,7 +111,27 @@ def loan():
     else:
         book_loan_engine(user_type)
 
+'''도서 반납 엔진'''
+def ban_nap_engine(number):
+    for data in book_list:
+        if number == data['number']:
+            if data['loan'] == 0:
+                print(number)
+                print(data['name'])
+                print('반납 완료')
+                row_number = book_list.index(data)
+                input_cell = row_number + 2
+                list_sheet[f'C{input_cell}'] = 1
+                book_excel_file.save(filename = file_name)
+                return
+            else:
+                print('이미 반납되어있는 도서입니다.')
+                return
+    print('반납하려는 책은 도서관에 없는 책입니다. 목록을 확인해주세요.')
 
+#실제 도서 반납 구현
+def ban_nap():
+    user_type = input('분류 번호를 입력해주세요 (예)20-도B-01 : ')
+    ban_nap_engine(user_type)
 
-
-loan()
+ban_nap()
